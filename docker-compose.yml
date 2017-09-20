@@ -1,0 +1,26 @@
+version: "3"
+services:
+  nginx:
+    build:
+      context: "./nginx"
+      dockerfile: "Dockerfile"
+    container_name: "nginx"
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - php
+    volumes:
+      - ./www:/usr/share/nginx
+  php:
+    build:
+      context: "./php"
+      dockerfile: "Dockerfile"
+    container_name: "php"
+    tty: true
+    ports:
+      - 9000:9000
+    volumes:
+      - ./www:/usr/share/nginx
+networks:
+  default:
